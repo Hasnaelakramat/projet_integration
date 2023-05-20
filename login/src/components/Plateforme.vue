@@ -50,7 +50,7 @@
                             
 
 
-                            <router-link :to="platform"> <a href="#" class="nav-link ">
+                            <router-link :to="Interventions"> <a href="#" class="nav-link ">
                                     <div class="sb-nav-link-icon"> <font-awesome-icon icon="fa-solid fa-chalkboard-user" /></div>
                                     Interventions
                                 </a></router-link>
@@ -186,8 +186,9 @@ export default {
             home: '/',
             checkemail: 'checkemail',
             Tables: 'Tables',
-            platform: '/platform',
-            Profil: 'Profil'
+            platform: 'platform',
+            Profil: 'Profil',
+            Interventions:'Interventions'
 
         }
     },

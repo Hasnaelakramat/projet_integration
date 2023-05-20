@@ -5,6 +5,7 @@ import PasswordView from '../views/PasswordView.vue'
 import checkemailView from '../views/checkemailView.vue'
 import TablesView from '../views/TablesView.vue'
 import ProfilView from '../views/ProfilView.vue'
+import InterventionsView from '../views/InterventionsView.vue'
 
 
 const routes = [
@@ -39,7 +40,11 @@ const routes = [
     name: 'Profil',
     component: ProfilView
   },
-  
+  {
+    path: '/Interventions',
+    name: 'Interventions',
+    component: InterventionsView
+  },
   
 ]
 
