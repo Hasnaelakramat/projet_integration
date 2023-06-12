@@ -1,6 +1,6 @@
 ### projet_integration
-##Mise en contexte
-#Dans le but de digitaliser la gestion des ressources humaines, l'université Abdelmalek Essaadi souhaite mettre en place une application web permettant d'automatiser le paiement des vacations et des heures supplémentaires effectuées par les enseignants.
+## Mise en contexte
+  Dans le but de digitaliser la gestion des ressources humaines, l'université Abdelmalek Essaadi souhaite mettre en place une application web permettant d'automatiser le paiement des vacations et des heures supplémentaires effectuées par les enseignants.
 
 Chaque enseignant de l'université effectue un certain nombre d'heures d'enseignement dans une année. Suivant son grade et son type (permanent ou vacataire), un certain nombre de ces heures peut être considéré comme supplémentaire.
    -Les enseignants externes (vacataires) : toutes les heures effectuées sont supplémentaires;
