@@ -23,16 +23,4 @@ class Administrateur extends Model
     public function user(){
         return $this->belongsTo(User::class, 'id_user');
     }
-    // protected $hidden=[
-    //     'ppr'
-    // ];
-    /**
- * The attributes that should be cast.
- *
- *  @var array
- */
-protected $casts = [
-    'ppr' => 'encrypted',
-];
-
 }

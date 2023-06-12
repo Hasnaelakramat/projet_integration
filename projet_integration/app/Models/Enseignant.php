@@ -31,26 +31,15 @@ class Enseignant extends Model
         return $this->belongsTo(Grade::class, 'id_grade');
     }
 
-    public function user() {
-        return $this->hasOne(User::class);
+    public function user(){
+        return $this->belongsTo(User::class, 'id_user');
     }
+
     public function paiements() {
         return $this->hasMany(Paiement::class, 'id_intervenant');
     }
+    
     public function interventions() {
         return $this->hasMany(Interventions::class, 'id_intervenant');
     }
-
-    // protected $hidden=[
-    //     'ppr'
-    // ];
-    /**
- * The attributes that should be cast.
- *
- *  @var array
- */
-protected $casts = [
-    'ppr' => 'encrypted',
-];
-
 }
