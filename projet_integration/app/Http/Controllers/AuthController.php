@@ -6,6 +6,7 @@ use App\Http\Requests\enseignantrequest;
 use App\Http\Requests\ForgotPassword;
 use App\Http\Requests\loginuserrequest;
 use App\Http\Requests\ResetPassword;
+use App\Mail\EnseignantCreated;
 use App\Models\Administrateur;
 use App\Models\Enseignant;
 use App\Models\Etablissement;
@@ -132,7 +133,14 @@ $etab = Etablissement::find($id_etab);
         'id_user' => $user_id,
     ]);
     $token = $user->createToken('API token of ' . $user->username)->plainTextToken;
-
+     //======envoyer le mail <enseignant ajouter >=========>>>> 
+     $mailData = [
+        'user' => $user,
+        'password' => bcrypt($request->input('password')),
+    ];
+    
+    Mail::to($user->email)->send(new EnseignantCreated($user, $request->input('password')));
+    //========<<<<<>>>>>>>>>>>>>>==========//
     return $this->success([
         'user' => $user,
         'token' => $token,
