@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Paiement extends Model
 {
-    protected $primaryKey = 'id_paiement';
     protected $fillable = [
         'id_intervenant',
         'id_etab',
         'vh',
+        'taux_H',
         'brut',
         'ir',
         'net',
@@ -19,22 +19,11 @@ class Paiement extends Model
         'semestre'
     ];
 
-    public function intervention()
-{
-    return $this->belongsTo(Intervention::class, 'id_intervention', 'id_intervention');
-}
-
+    public function intervenant() {
+        return $this->belongsTo(Enseignant::class, 'id_intervenant');
+    }
 
     public function etablissement() {
-        return $this->belongsTo(Etablissement::class);
-    }
-    public function enseignant()
-{
-    return $this->belongsTo(Enseignant::class, 'id_intervenant', 'id_enseign');
-}
-
-  
-    public static function getPaiementsForEnseignant($enseignantId) {
-        return self::where('id_intervenant', $enseignantId)->get();
+        return $this->belongsTo(Etablissement::class, 'id_etab');
     }
 }

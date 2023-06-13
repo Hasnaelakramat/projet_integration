@@ -15,4 +15,3 @@ Les heures supplémentaires sont payées séparément à l'enseignant. Les volum
   Le système doit permettre à chaque établissement de gérer les informations relatives à ses vacataires, y compris leur ajout, modification et suppression. Il devrait également permettre la gestion des plannings et de la rémunération de ces intervenants. Pour faciliter le processus de paiement, le système doit fournir une interface pour l'université, qui permettra de payer chaque intervenant en fonction de son grade et du volume horaire effectué. Les vacataires devront avoir accès à leur planning et à leur état de paiement.
   
   La fiche de paie devra comporter les informations suivantes sur le professeur : son nom et son prénom, son établissement d'origine, son grade, les établissements dans lesquels il intervient, le volume horaire assuré par semestre et par établissement, le volume horaire total, le taux horaire, l'impôt sur le revenu et le montant net à payer.
-

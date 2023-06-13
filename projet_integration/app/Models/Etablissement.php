@@ -21,6 +21,6 @@ class Etablissement extends Model
         return $this->hasMany(Enseignant::class);
     }
     public function interventions() {
-        return $this->hasMany(Intervention::class, 'id_etab');
+        return $this->hasMany(Intervention::class, 'id_intervention');
     }
 }
