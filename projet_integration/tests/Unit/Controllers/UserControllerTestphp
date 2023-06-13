@@ -1,0 +1,38 @@
+<?php
+
+namespace Tests\Unit\Controllers;
+
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Tests\TestCase;
+
+class UserControllerTest extends TestCase
+{
+    use RefreshDatabase;
+
+    public function testProfile()
+    {
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)->get('/profile');
+
+        $response->assertStatus(200)
+            ->assertJson($user->toArray());
+    }
+
+    public function testUpdatePassword()
+    {
+        $user = User::factory()->create();
+        $newPassword = 'newpassword';
+
+        $response = $this->actingAs($user)
+            ->post('/update_password', ['password' => $newPassword]);
+
+        $response->assertStatus(200);
+
+        $updatedUser = User::find($user->id);
+        $this->assertTrue(\Hash::check($newPassword, $updatedUser->password));
+        $this->assertTrue(\Auth::attempt(['email' => $user->email, 'password' => $newPassword]));
+    }
+}
