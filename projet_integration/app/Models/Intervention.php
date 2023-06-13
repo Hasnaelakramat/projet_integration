@@ -7,34 +7,27 @@ use Illuminate\Database\Eloquent\Model;
 
 class Intervention extends Model
 {
-    // protected $primaryKey = 'id_intervention';
+    use HasFactory;
+    protected $primaryKey='id_intervention';
+    protected $fillable = [
+        'intitule_intervention',
+        'annee_univ',
+        'semestre',
+        'date_debut',
+        'date_fin',
+        'nbr_heures',
+        'visa_etab',
+        'visa_uae'
+    ];
+     const created_at=null;
+     const updated_at=null;
 
-    protected $primaryKey = 'id_intervention';
-        protected $fillable = [
-            'intitule_intervention',
-            'annee_univ',
-            'semestre',
-            'date_debut',
-            'date_fin',
-            'nbr_heures',
-            'id_etab',
-            'id_enseign'
-        ];
+    public function enseignant(){
+        return $this->belongsTo(Enseignant::class, 'id_enseign');
+    }
     
-        // public function intervenant() {
-        //     return $this->belongsTo(Enseignant::class);
-        // }
-          
-        public function enseignants()
-    {
-    return $this->hasMany(Enseignant::class);
-}   
 
-    
-public function etablissement()
-{
-    return $this->belongsTo(Etablissement::class, 'id_etab', 'id_etab');
-}
-
-    
+    public function etablissement() {
+        return $this->belongsTo(Etablissement::class, 'id_etab');
+    }
 }

@@ -7,6 +7,9 @@ use App\Http\Requests\interventionrequest;
 use App\Models\Intervention;
 use App\Http\Requests\StoreInterventionRequest;
 use App\Http\Requests\UpdateInterventionRequest;
+use App\Mail\InterventionEtabValidated;
+use App\Mail\InterventionValidated;
+use App\Mail\ValidationRemoved;
 use App\Models\Administrateur;
 use App\Models\Enseignant;
 use App\Models\Etablissement;
@@ -16,6 +19,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Mail;
 
 class InterventionController extends Controller
 {
@@ -120,44 +124,45 @@ class InterventionController extends Controller
     //         'interventions' => $interventions
     //     ]);
     // }
-     public function visa_uae($interventionId)
+    public function visa_uae($interventionId)
     {
         $intervention = Intervention::findOrFail($interventionId);
         $intervention->visa_uae = !$intervention->visa_uae;
         $intervention->save();
-        if($intervention->visa_uae===true)
-        {
-// seft lih mail fih message bli tvalidat l'intervenion dyalo mn 3and l'uae
-        }
+     
+       /*   if ($intervention->enseignant->user === null) {
+            return response()->json([
+                'message' => 'Aucun enseignant associé à cette intervention.',
+            ]);
+        } */
+        $intervenerEmail = $intervention->enseignant->user->email;
+         if($intervention->visa_uae===true)
+       {
+           
+            Mail::to($intervenerEmail)->send(new InterventionValidated($intervention));         
+        } 
         else{
-            // seft lih mail goulih bli l'uae hayedat lvalidation 
-        }
-
-
+            Mail::to($intervenerEmail)->send(new ValidationRemoved($intervention));
+       }
      return response()->json('the request was successful',200);
-    }
+    
+   }
 
     public function visa_etab($interventionId)
     {
-        $intervention = Intervention::findOrFail($interventionId);
-        $id_etab = Administrateur::join('users', function ($join) {
-            $join->on('administrateurs.id_user', '=', 'users.id_user')
-                 ->where('users.id_user', '=', Auth::user()->id_user);})->value('administrateurs.id_etab');
-                 if($id_etab===$intervention->id_etab)
-                 {
-                    $intervention->visa_etab = !$intervention->visa_etab ;
-                    $intervention->save();
-            if($intervention->visa_etab)
-            {
-                //seft lih mail bli rah administrateur wafe9 3la l'intervention
-            }
-                else{
-                    //seft lih mail bli rah administrateur  mab9ach mwafe9 3la l'intervention
-                }
-                return response()->json('the request was successful',200);
-                 }
-                 abort(404);
-                }
+       $intervention = Intervention::findOrFail($interventionId);
+       $intervention->visa_etab = !$intervention->visa_etab ;
+       $intervention->save();
+       $intervenerEmail = $intervention->enseignant->user->email;
+       if($intervention->visa_etab)
+        { 
+           Mail::to($intervenerEmail)->send(new InterventionEtabValidated($intervention));         }
+       else{
+           Mail::to($intervenerEmail)->send(new InterventionEtabValidated($intervention));
+       }
+       return response()->json('the request was successful',200);
+       }
+
 
     /**
      * Show the form for creating a new resource.
