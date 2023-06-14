@@ -18,11 +18,11 @@
                     </button>
                 </div>
             </form>
-
+            <!-- Navbar-->
             <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
-                        aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                        aria-expanded="false"><font-awesome-icon icon=" fas fa-user fa-fw" /></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
 
 
@@ -90,8 +90,7 @@
                                 </a></router-link>
 
 
-                            <router-link :to="Paiement"
-                                v-if="isAdminUAE || isPresidentUAE || isRHEtablissement || isEnseignant || isAdminEtablissement">
+                            <router-link :to="Paiement" v-if="isPresidentUAE || isAdminUAE || isEnseignant">
                                 <a href="#" class="nav-link ">
                                     <div class="sb-nav-link-icon"> <font-awesome-icon icon="fa-solid fa-credit-card" />
                                     </div>
@@ -116,19 +115,11 @@
                                 </router-link></li>
                             <li class="breadcrumb-item active">Interventions</li>
                         </ol>
-                        <div v-if="isAdminUAE || isPresidentUAE" class="card mb-4">
-                            <div class="card-body">
-                                Vous trouvez ici les differents établissements de l'université abdelmalek essaadi!
-                                <br>
-                                Veuillez selectionner un établissement pour voir les interventions qui le concernent
-                            </div>
-                        </div>
 
-
-                        <div v-if="isAdminEtablissement || isRHEtablissement" class="card mb-4">
+                        <div  class="card mb-4" v-if="isAdminEtablissement || isRHEtablissement">
                             <div class="card-body">
 
-                                <form class="input-group" v-if="isAdminEtablissement || isRHEtablissement">
+                                <form class="input-group">
                                     <div class="d-flex align-items-center">
                                         <router-link :to="AddIntervention">
                                             <button type="button" class="btn" id="AddIntervention">
@@ -144,50 +135,74 @@
                             </div>
                         </div>
 
+                        <div class="card mb-4">
+                            <div class="cardTable">
+                                <font-awesome-icon icon="fa-solid fa-building-columns" /> UAE :
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <input type="text" class="form-control" v-model="searchText"
+                                            placeholder="Rechercher" />
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col">
+                                        <table class="table table-bordered">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th>Intitulé Intervention</th>
+                                                    <th>Nom de l'enseignant</th>
+                                                    <th>Prénom de l'enseignant</th>
+                                                    <th>Etablissement</th>
+                                                    <th>A.U</th>
+                                                    <th>Semestre</th>
+                                                    <th>Date de début</th>
+                                                    <th>Date de fin</th>
+                                                    <th>Nombre d'heures</th>
+                                                    <th>Validation de l'établissement</th>
+                                                    <th>Validation de l'université</th>
+                                                </tr>
+                                            </thead>
 
-                        <ul v-if="isAdminUAE || isPresidentUAE" v-for="item in etablissements">
 
 
-                            <li><strong>
-                                    <button class="goto" @click="details(item.id_etab)"></button>
-                                    {{ item.code }},
 
+                                            <tbody>
 
-                                    {{ item.nom }},
+                                                <template v-for="intervention in interventionsTable">
+                                                    <tr>
+                                                        <td>{{ intervention.intitule_intervention }}</td>
+                                                        <td>{{ intervention.nomEnseignant }}</td>
+                                                        <td>{{ intervention.prenomEnseignant }}</td>
+                                                        <td>{{ intervention.nomEtab }}</td>
+                                                        <td>{{ intervention.annee_univ }}</td>
+                                                        <td>{{ intervention.semestre }}</td>
+                                                        <td>{{ intervention.date_debut }}</td>
+                                                        <td>{{ intervention.date_fin }}</td>
+                                                        <td>{{ intervention.nbr_heures }}</td>
+                                                        <td>{{ intervention.visa_etab }}
+                                                            <button v-if="isAdminEtablissement" type="button" class="btn"
+                                                                id="valider">
+                                                                <font-awesome-icon icon="fa-solid fa-check" /> </button>
+                                                        </td>
+                                                        <td>{{ intervention.visa_uae }}
+                                                            <button v-if="isPresidentUAE" type="button" class="btn"
+                                                                id="valider">
+                                                                <font-awesome-icon icon="fa-solid fa-check" /> </button>
+                                                        </td>
+                                                    </tr>
+                                                </template>
 
-                                    {{ item.ville }}</strong>
-                            </li>
+                                            </tbody>
+                                        </table>
+                                    </div>
 
-                        </ul>
-
-                        <div v-if="isAdminEtablissement || isRHEtablissement">
-                            <router-link :to="InterventionsDetails">
-                                <strong>
-
-                                    <button class="goto">
-                                        <font-awesome-icon icon="fa-solid fa-broom-ball" />
-                                    </button>
-
-                                    Voir l'ensemble des interventions de votre etablissement
-                                </strong>
-                            </router-link>
-
+                                </div>
+                            </div>
                         </div>
-
-
-
-
-
-
                     </div>
-
-
-
-
-
-
                 </main>
-
                 <footer class="py-3  mt-auto ">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between ">
@@ -203,55 +218,49 @@
 
             </div>
         </div>
-
-
-
-
     </div>
 </template>
 
 
-
-
-<style src="@/assets/styles.css"></style>
-
-
-<script >
-import { bottom } from '@popperjs/core';
+<script>
 import axios from 'axios';
 
-
-
 export default {
+
+
+
+
     data() {
         return {
-            home: "/",
-            checkemail: "checkemail",
-            Tables: "Tables",
-            platform: "platform",
-            Interventions: "Interventions",
-            AddAdmin: "AddAdmin",
-            Paiement: "Paiement",
-            ListeDesAdmines: "ListeDesAdmines",
-            listeEnseignants: "/listeEnseignants",
-            InterventionsDetails: "/InterventionsDetails",
-            etablissements: [],
-            AddEtab: "AddEtab",
-            etablissementId: "",
-            AddIntervention: "/AddIntervention",
+
+            home: '/',
+            checkemail: 'checkemail',
+            Tables: 'Tables',
+            platform: 'platform',
+            Interventions: 'Interventions',
+            AddAdmin: 'AddAdmin',
+            Paiement: 'Paiement',
+            ListeDesAdmines: 'ListeDesAdmines',
+            listeEnseignants: '/listeEnseignants',
+            interventionsTable: [],
+            AddIntervention: 'AddIntervention',
+
             profile: {
-                firstName: "",
-                lastName: "",
-                email: "",
-                telephone: "",
+                firstName: '',
+                lastName: '',
+                email: '',
+                telephone: '',
             },
             isPresidentUAE: false,
             isAdminUAE: false,
             isAdminEtablissement: false,
             isRHEtablissement: false,
             isEnseignant: false,
-        };
+            interventionId: '',
+
+        }
     },
+
     computed: {
         data() {
             return this.$store.getters.getData;
@@ -259,40 +268,46 @@ export default {
         getType() {
             return this.$store.getters.getType;
         },
+
     },
+
     mounted() {
         this.statut();
-        this.listeEtabs();
+        // this.getInterventions();
+
     },
+
     created() {
-        this.etablissementId = this.$route.params.id;
+        this.getInterventions();
+
+
+
     },
+
     methods: {
-        details(id_etab) {
-            console.log('id_etab: ' + id_etab);
-            this.$router.push(`/InterventionsDetails/${id_etab}/details`);
-        },
-        listeEtabs() {
+        getInterventions() {
             const authToken = this.$store.getters.getData.data.token.plainTextToken;
-            // Make the API request
-            axios.get("http://localhost:8000/api/show_etablissements", {
+            axios.get('http://localhost:8000/api/interventions', {
                 headers: {
                     Authorization: `Bearer ${authToken}`,
                 },
-            }).then(response => {
-                console.log(response.data);
-                this.etablissements = response.data;
-                const router = useRouter();
-                router.push({ path: "/InterventionsDetails/" + etablissementId });
             })
+                .then(response => {
+
+                    console.log(response.data);
+                    this.interventionsTable = response.data.interventions;
+
+                    // this.interventions = response.data.interventions;
+                    // console.log(response.data);
+                })
                 .catch(error => {
                     console.error(error);
                 });
         },
         Profil() {
             const authToken = this.$store.getters.getData.data.token.plainTextToken;
-            console.log("token:", authToken);
-            axios.get("http://localhost:8000/api/profile", {
+            console.log('token:', authToken)
+            axios.get('http://localhost:8000/api/profile', {
                 headers: {
                     Authorization: `Bearer ${authToken}`,
                 },
@@ -300,16 +315,22 @@ export default {
                 .then(response => {
                     this.profile = response.data;
                     console.log(this.profile);
-                    this.$store.dispatch("setProfilData", response.data);
-                    this.$router.push("/Profil");
+                    this.$store.dispatch('setProfilData', response.data);
+
+                    this.$router.push('/Profil')
+
                 })
                 .catch(error => {
                     console.error(error);
                 });
+
+
         },
         logout() {
+
             const authToken = this.$store.getters.getData.data.token.plainTextToken;
-            axios.post("http://localhost:8000/api/logout", {}, {
+
+            axios.post('http://localhost:8000/api/logout', {}, {
                 headers: {
                     Authorization: `Bearer ${authToken}`,
                 },
@@ -317,34 +338,38 @@ export default {
                 .then(response => {
                     this.logout = response.data;
                     console.log(this.logout);
+
                     // Redirect to the home page or any other desired page
-                    this.$router.push("/");
-                    alert("Déconnexion effectuée avec succès");
+
+                    this.$router.push('/');
+                    alert('Déconnexion effectuée avec succès');
                 })
                 .catch(error => {
                     // Handle any errors that occur during the request
                     console.error(error);
                 });
         },
+
         statut() {
-            if (this.getType === "Président de l'UAE") {
-                this.isPresidentUAE = true;
-            }
+            if (this.getType === "Président de l'UAE") { this.isPresidentUAE = true; }
+
             else if (this.getType === "Admin de l'UAE") {
                 this.isAdminUAE = true;
-            }
-            else if (this.getType == "Admin d'un établissement") {
+
+            } else if (this.getType == "Admin d'un établissement") {
                 this.isAdminEtablissement = true;
-            }
-            else if (this.getType == "RH d'un établissement") {
+
+            } else if (this.getType == "RH d'un établissement") {
                 this.isRHEtablissement = true;
             }
-            else if (this.getType == "Enseignant") {
-                this.isEnseignant = true;
-            }
+            else if (this.getType == "Enseignant") { this.isEnseignant = true; }
         },
-    },
-    components: { bottom }
-}
+    }
 
+
+
+
+
+}
 </script>
+

@@ -90,9 +90,9 @@
                                 </a></router-link>
 
 
-                            <router-link :to="Paiement"
-                                v-if="isAdminUAE || isPresidentUAE || isRHEtablissement || isEnseignant || isAdminEtablissement"> <a href="#"
-                                    class="nav-link ">
+                                <router-link :to="Paiement"
+                                v-if=" isPresidentUAE || isAdminUAE || isEnseignant ">
+                                <a href="#" class="nav-link ">
                                     <div class="sb-nav-link-icon"> <font-awesome-icon icon="fa-solid fa-credit-card" />
                                     </div>
                                     Paiement

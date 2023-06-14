@@ -89,8 +89,8 @@
                                 </a></router-link>
 
 
-                            <router-link :to="Paiement"
-                                v-if="isAdminUAE || isPresidentUAE || isRHEtablissement || isEnseignant || isAdminEtablissement">
+                                <router-link :to="Paiement"
+                                v-if=" isPresidentUAE || isAdminUAE || isEnseignant ">
                                 <a href="#" class="nav-link ">
                                     <div class="sb-nav-link-icon"> <font-awesome-icon icon="fa-solid fa-credit-card" />
                                     </div>
@@ -124,7 +124,7 @@
                         <div class="card-body">
                             <div class="row">
                                
-                                <form class="input-group">
+                                <form v-if="isAdminEtablissement || isRHEtablissement" class="input-group">
                                     <div class="d-flex align-items-center">
                                         <router-link :to="AjouterEnseignant">
                                             <button type="button" class="btn" id="addEtab">
@@ -141,8 +141,8 @@
                                     <table class="table table-bordered">
                                         <thead class="thead-light">
                                             <tr>
-                                                <th>Modifier</th>
-                                                <th>Supprimer</th>
+                                                <th v-if="isAdminEtablissement || isRHEtablissement" >Modifier</th>
+                                                <th v-if="isAdminEtablissement || isRHEtablissement">Supprimer</th>
                                                 <th> Nom </th>
                                                 <th>Prénom</th>
                                                 <th>Email</th>

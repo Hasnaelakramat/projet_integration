@@ -88,12 +88,12 @@ const routes = [
     component:PaiementView
   },
   
-  {
-    path: '/InterventionsDetails/:id_etab/details',
-    name: 'InterventionsDetails',
-    component:InterventionsDetailsView,
-    props:true,
-  },
+  // {
+  //   path: '/InterventionsDetails/:id_etab/details',
+  //   name: 'InterventionsDetails',
+  //   component:InterventionsDetailsView,
+  //   props:true,
+  // },
 
   {
     path: '/ListeDesAdmines',
