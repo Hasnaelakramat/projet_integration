@@ -71,24 +71,29 @@
                                     Interventions
                                 </a></router-link>
 
+                            <router-link :to="listeEnseignants"
+                                v-if="isAdminEtablissement || isRHEtablissement || isPresidentUAE || isAdminUAE"> <a
+                                    href="#" class="nav-link ">
+                                    <div class="sb-nav-link-icon"> <font-awesome-icon icon="fa-solid fa-list" /></div>
+                                    Listes des enseignants
+                                </a></router-link>
 
-                            <router-link :to="ListeDesAdmines" v-if="isAdminUAE || isAdminEtablissement"> <a href="#"
+                            <router-link :to="ListeDesAdmines" v-if="isAdminUAE || isPresidentUAE"> <a href="#"
                                     class="nav-link ">
                                     <div class="sb-nav-link-icon"> <font-awesome-icon icon="fa-solid fa-list" />
                                     </div>
                                     Liste des Admins
                                 </a></router-link>
 
-                            <router-link :to="AddAdmin" v-if="isAdminUAE || isAdminEtablissement"> <a href="#"
-                                    class="nav-link" style="text-decoration: none;">
+                            <router-link :to="AddAdmin" v-if="isAdminUAE || isPresidentUAE"> <a href="#" class="nav-link">
                                     <div class="sb-nav-link-icon"> <font-awesome-icon icon="fa-solid fa-user-plus" /></div>
                                     Ajouter un Admin
                                 </a></router-link>
 
 
                             <router-link :to="Paiement"
-                                v-if="isAdminUAE || isPresidentUAE || isRHEtablissement || isEnseignant"> <a href="#"
-                                    class="nav-link ">
+                                v-if="isAdminUAE || isPresidentUAE || isRHEtablissement || isEnseignant || isAdminEtablissement">
+                                <a href="#" class="nav-link ">
                                     <div class="sb-nav-link-icon"> <font-awesome-icon icon="fa-solid fa-credit-card" />
                                     </div>
                                     Paiement
@@ -96,7 +101,7 @@
 
                         </div>
                     </div>
-                    <div class="sb-sidenav-footer">
+                    <div class="sb-sidenav-footer py-3  mt-auto ">
                         <div class="">Connecté en tant que :</div>
                         {{ getType }}
                     </div>
@@ -114,11 +119,7 @@
                             </li>
                             <li class="breadcrumb-item active">Ajouter un Admin</li>
                         </ol>
-                        <div class="card ">
-                            <div class="card-body">
-                                Veuillez saisir les informations requises !
-                            </div>
-                        </div>
+                       
 
                         <div class="costum bg-color">
                             <div id="layoutAuthentication">
@@ -214,9 +215,10 @@
                                                                             <label for="inputetab"
                                                                                 style="font-weight: bold;">Etablissement :
                                                                             </label><br><br>
-                                                                            <input class="form-control" style="height: 50px;"
-                                                                            type="text" autocomplete="off" v-model="id_etab"
-                                                                            required />
+                                                                            <input class="form-control"
+                                                                                style="height: 50px;" type="text"
+                                                                                autocomplete="off" v-model="id_etab"
+                                                                                required />
 
 
 
@@ -228,13 +230,13 @@
                                                                 <label for="inputpwd" style="font-weight: bold;">Mot de
                                                                     passe :
                                                                 </label><br><br>
-                                                                <input class="form-control" style="height: 50px;"
-                                                                    id="input" type="password" autocomplete="off"
-                                                                    v-model="password" required />
+                                                                <input class="form-control" style="height: 50px;" id="input"
+                                                                    type="password" autocomplete="off" v-model="password"
+                                                                    required />
 
-                                                            
 
-                                 
+
+
 
                                                                 <div class="mt-4 mb-0">
 
@@ -244,7 +246,8 @@
 
                                                                         <a href="#" class="small" type="reset">Annuler</a>
 
-                                                                        <button class="btn" id="submit" type="submit" style="text-decoration: none; background-color: #343090;">Ajouter</button>
+                                                                        <button class="btn" id="submit" type="submit"
+                                                                            style="text-decoration: none; background-color: #343090;">Ajouter</button>
 
 
                                                                     </div>
@@ -300,6 +303,10 @@ export default {
             AddAdmin: 'AddAdmin',
             Paiement: 'Paiement',
             ListeDesAdmines: 'ListeDesAdmines',
+            tableData:[],
+            AjouterEnseignant:'/AjouterEnseignant',
+            listeEnseignants:'/ListeEnseignants',
+
             etablissements: [],
 
 
@@ -381,7 +388,7 @@ export default {
                         this.type = '';
                     } else {
                         console.error('Invalid response data structure');
-                        
+
                     }
                 })
                 .catch(error => {
@@ -430,27 +437,27 @@ export default {
         },
         logout() {
 
-const authToken = this.$store.getters.getData.data.token.plainTextToken;
+            const authToken = this.$store.getters.getData.data.token.plainTextToken;
 
-axios.post('http://localhost:8000/api/logout', {}, {
-    headers: {
-        Authorization: `Bearer ${authToken}`,
-    },
-})
-    .then(response => {
-        this.logout = response.data;
-        console.log(this.logout);
+            axios.post('http://localhost:8000/api/logout', {}, {
+                headers: {
+                    Authorization: `Bearer ${authToken}`,
+                },
+            })
+                .then(response => {
+                    this.logout = response.data;
+                    console.log(this.logout);
 
-        // Redirect to the home page or any other desired page
+                    // Redirect to the home page or any other desired page
 
-        this.$router.push('/');
-        alert('Déconnexion effectuée avec succès');
-    })
-    .catch(error => {
-        // Handle any errors that occur during the request
-        console.error(error);
-    });
-},
+                    this.$router.push('/');
+                    alert('Déconnexion effectuée avec succès');
+                })
+                .catch(error => {
+                    // Handle any errors that occur during the request
+                    console.error(error);
+                });
+        },
 
         statut() {
             if (this.getType === "Président de l'UAE") { this.isPresidentUAE = true; }

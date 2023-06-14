@@ -89,9 +89,10 @@ const routes = [
   },
   
   {
-    path: '/InterventionsDetails',
+    path: '/InterventionsDetails/:id_etab/details',
     name: 'InterventionsDetails',
-    component:InterventionsDetailsView
+    component:InterventionsDetailsView,
+    props:true,
   },
 
   {
@@ -125,9 +126,10 @@ const routes = [
   },
 
   {
-    path: '/UpdateEnseignant/:id_enseign',
+    path: '/UpdateEnseignant/:userid/update',
     name: 'UpdateEnseignant',
-    component:UpdateEnseignantView
+    component:UpdateEnseignantView,
+    props:true,
   },
 
   {

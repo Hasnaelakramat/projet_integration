@@ -69,30 +69,29 @@
                                     Interventions
                                 </a></router-link>
 
-
-                            <router-link :to="listeEnseignants" v-if="isAdminEtablissement || isRHEtablissement"> <a
+                            <router-link :to="listeEnseignants"
+                                v-if="isAdminEtablissement || isRHEtablissement || isPresidentUAE || isAdminUAE"> <a
                                     href="#" class="nav-link ">
                                     <div class="sb-nav-link-icon"> <font-awesome-icon icon="fa-solid fa-list" /></div>
                                     Listes des enseignants
                                 </a></router-link>
 
-                            <router-link :to="ListeDesAdmines" v-if="isAdminUAE || isAdminEtablissement"> <a href="#"
+                            <router-link :to="ListeDesAdmines" v-if="isAdminUAE || isPresidentUAE"> <a href="#"
                                     class="nav-link ">
                                     <div class="sb-nav-link-icon"> <font-awesome-icon icon="fa-solid fa-list" />
                                     </div>
                                     Liste des Admins
                                 </a></router-link>
 
-                            <router-link :to="AddAdmin" v-if="isAdminUAE || isAdminEtablissement"> <a href="#"
-                                    class="nav-link" style="text-decoration: none;">
+                            <router-link :to="AddAdmin" v-if="isAdminUAE || isPresidentUAE"> <a href="#" class="nav-link">
                                     <div class="sb-nav-link-icon"> <font-awesome-icon icon="fa-solid fa-user-plus" /></div>
                                     Ajouter un Admin
                                 </a></router-link>
 
 
                             <router-link :to="Paiement"
-                                v-if="isAdminUAE || isPresidentUAE || isRHEtablissement || isEnseignant"> <a href="#"
-                                    class="nav-link ">
+                                v-if="isAdminUAE || isPresidentUAE || isRHEtablissement || isEnseignant || isAdminEtablissement">
+                                <a href="#" class="nav-link ">
                                     <div class="sb-nav-link-icon"> <font-awesome-icon icon="fa-solid fa-credit-card" />
                                     </div>
                                     Paiement
@@ -100,7 +99,7 @@
 
                         </div>
                     </div>
-                    <div class="sb-sidenav-footer">
+                    <div class="sb-sidenav-footer py-3  mt-auto ">
                         <div class="">Connecté en tant que :</div>
                         {{ getType }}
                     </div>
@@ -116,11 +115,15 @@
                                 </router-link></li>
                             <li class="breadcrumb-item active">Liste des Enseignants</li>
                         </ol>
-                        <div class="card mb-4">
-                            <div class="card-body">
-                                Vous trouvez ici les informations sur les enseignants !
-
-                                <hr>
+                    
+                    </div>
+                    <div class="card mb-4">
+                        <div class="cardTable">
+                            <font-awesome-icon icon="fa-solid fa-list" /> Enseignants:
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                               
                                 <form class="input-group">
                                     <div class="d-flex align-items-center">
                                         <router-link :to="AjouterEnseignant">
@@ -131,19 +134,6 @@
                                         <h6 class="ms-2">Ajouter un enseignant ?</h6>
                                     </div>
                                 </form>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="card mb-4">
-                        <div class="cardTable">
-                            <font-awesome-icon icon="fa-solid fa-list" /> Enseignants:
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <input type="text" class="form-control" v-model="searchText" placeholder="Rechercher" />
-                                </div>
                             </div>
 
                             <div class="row mt-3">
@@ -169,11 +159,10 @@
 
                                                 <tr>
 
-                                                    <td> <router-link :to="`/UpdateEnseignant/${item.id_enseign}`">
-                                                            <button type="button" class="btn" id="updateEnseign">
+                                                    <td> 
+                                                            <button type="button" class="btn" id="updateEnseign" @click="update(item.id_enseign)">
                                                                 <font-awesome-icon icon="fa-solid fa-pen-to-square" />
                                                             </button>
-                                                        </router-link>
                                                     </td>
 
                                                     <td> <button type="button" class="btn" id="deleteEnseign"
@@ -255,7 +244,7 @@ export default {
             AjouterEnseignant: '/AjouterEnseignant',
             listeEnseignants: '/ListeEnseignants',
             UpdateEnseignant: '/UpdateEnseignant',
-            id_enseign: '',
+            // id_enseign: '',
 
             profile: {
                 firstName: '',
@@ -293,6 +282,9 @@ export default {
     },
 
     methods: {
+        update(userid){
+            this.$router.push(`/UpdateEnseignant/${userid}/update`);
+        },
         deleteEnseignant(id) {
             const authToken = this.$store.getters.getData.data.token.plainTextToken;
             axios.delete(`http://localhost:8000/api/destroy_Enseignant/${id}`, {

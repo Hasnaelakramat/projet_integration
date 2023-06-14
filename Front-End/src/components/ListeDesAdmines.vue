@@ -12,8 +12,8 @@
                 <div class="input-group">
                     <input class="form-control " type="text" placeholder="Rechercher ..." aria-label="Search for..."
                         aria-describedby="btnNavbarSearch" style="margin-top: 10px; margin-bottom: 10px;" />
-                    <button class="btn " type="button" style="height: 46px; margin-top: 10px; margin-bottom: 10px;"> <font-awesome-icon
-                            icon=" fas fa-search" />
+                    <button class="btn " type="button" style="height: 46px; margin-top: 10px; margin-bottom: 10px;">
+                        <font-awesome-icon icon=" fas fa-search" />
 
                     </button>
                 </div>
@@ -25,12 +25,14 @@
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
 
 
-                        <li> <a href="#" class="dropdown-item " @click="Profil"  style="text-decoration :none" >Profil</a></li>
+                        <li> <a href="#" class="dropdown-item " @click="Profil" style="text-decoration :none">Profil</a>
+                        </li>
 
                         <li>
                             <hr class="dropdown-divider" />
                         </li>
-                        <li><a href="#" class="dropdown-item " id="submit" type="submit" @click="logout" style="text-decoration :none">Logout</a></li>
+                        <li><a href="#" class="dropdown-item " id="submit" type="submit" @click="logout"
+                                style="text-decoration :none">Logout</a></li>
 
 
                     </ul>
@@ -44,12 +46,14 @@
                         <div class="nav">
                             <br>
 
-                            <router-link :to="platform" v-if="isAdminUAE || isPresidentUAE || isAdminEtablissement || isRHEtablissement || isEnseignant" > <a href="#" class="nav-link ">
+                            <router-link :to="platform"
+                                v-if="isAdminUAE || isPresidentUAE || isAdminEtablissement || isRHEtablissement || isEnseignant">
+                                <a href="#" class="nav-link ">
                                     <div class="sb-nav-link-icon"> <font-awesome-icon icon=" fas fa-tachometer-alt" /></div>
                                     Dashboard
                                 </a></router-link>
 
-                            <router-link :to="Tables" v-if="isAdminUAE || isPresidentUAE" > <a href="#" class="nav-link ">
+                            <router-link :to="Tables" v-if="isAdminUAE || isPresidentUAE"> <a href="#" class="nav-link ">
                                     <div class="sb-nav-link-icon"> <font-awesome-icon icon="fa-solid fa-school" /></div>
                                     Etablissements
                                 </a></router-link>
@@ -57,28 +61,37 @@
 
 
 
-                            <router-link :to="Interventions" v-if="isAdminUAE || isPresidentUAE || isAdminEtablissement || isRHEtablissement || isEnseignant"> <a href="#" class="nav-link ">
+                            <router-link :to="Interventions"
+                                v-if="isAdminUAE || isPresidentUAE || isAdminEtablissement || isRHEtablissement || isEnseignant">
+                                <a href="#" class="nav-link ">
                                     <div class="sb-nav-link-icon"> <font-awesome-icon icon="fa-solid fa-chalkboard-user" />
                                     </div>
                                     Interventions
                                 </a></router-link>
 
+                            <router-link :to="listeEnseignants"
+                                v-if="isAdminEtablissement || isRHEtablissement || isPresidentUAE || isAdminUAE"> <a
+                                    href="#" class="nav-link ">
+                                    <div class="sb-nav-link-icon"> <font-awesome-icon icon="fa-solid fa-list" /></div>
+                                    Listes des enseignants
+                                </a></router-link>
 
-                            <router-link :to="ListeDesAdmines" v-if="isAdminUAE || isAdminEtablissement" > <a href="#"
+                            <router-link :to="ListeDesAdmines" v-if="isAdminUAE || isPresidentUAE"> <a href="#"
                                     class="nav-link ">
                                     <div class="sb-nav-link-icon"> <font-awesome-icon icon="fa-solid fa-list" />
                                     </div>
                                     Liste des Admins
                                 </a></router-link>
 
-                            <router-link :to="AddAdmin" v-if="isAdminUAE || isAdminEtablissement"> <a href="#" class="nav-link" style="text-decoration: none;">
+                            <router-link :to="AddAdmin" v-if="isAdminUAE || isPresidentUAE"> <a href="#" class="nav-link">
                                     <div class="sb-nav-link-icon"> <font-awesome-icon icon="fa-solid fa-user-plus" /></div>
                                     Ajouter un Admin
                                 </a></router-link>
 
 
-                            <router-link :to="Paiement" v-if="isAdminUAE || isPresidentUAE || isRHEtablissement || isEnseignant"> <a href="#"
-                                    class="nav-link ">
+                            <router-link :to="Paiement"
+                                v-if="isAdminUAE || isPresidentUAE || isRHEtablissement || isEnseignant || isAdminEtablissement">
+                                <a href="#" class="nav-link ">
                                     <div class="sb-nav-link-icon"> <font-awesome-icon icon="fa-solid fa-credit-card" />
                                     </div>
                                     Paiement
@@ -86,7 +99,7 @@
 
                         </div>
                     </div>
-                    <div class="sb-sidenav-footer">
+                    <div class="sb-sidenav-footer py-3  mt-auto ">
                         <div class="">Connecté en tant que :</div>
                         {{ getType }}
                     </div>
@@ -102,16 +115,12 @@
                                 </router-link></li>
                             <li class="breadcrumb-item active">Listes des Administrateurs</li>
                         </ol>
-                        <div class="card mb-4">
-                            <div class="card-body">
-                                Vous trouvez ici les informations sur les administrateurs !
-
-                            </div>
-                        </div>
+       
                     </div>
                     <div class="card mb-4">
                         <div class="cardTable">
-                            <font-awesome-icon icon="fa-solid fa-list" />  Administrateurs:                        </div>
+                            <font-awesome-icon icon="fa-solid fa-list" /> Administrateurs:
+                        </div>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-4">
@@ -135,15 +144,15 @@
                                         <tbody>
                                             <template v-for="item in tableData">
 
-                                            <tr>
-                                                <td>{{item.ppr}}</td>
-                                                <td>{{item.nom}}</td>
-                                                <td>{{ item.prenom }}</td>
-                                                <td>{{ item.etablissement_nom }}</td>
+                                                <tr>
+                                                    <td>{{ item.ppr }}</td>
+                                                    <td>{{ item.nom }}</td>
+                                                    <td>{{ item.prenom }}</td>
+                                                    <td>{{ item.etablissement_nom }}</td>
 
-                                            </tr>
-                                        </template>
-                                      
+                                                </tr>
+                                            </template>
+
 
                                         </tbody>
                                     </table>
@@ -203,7 +212,9 @@ export default {
             AddAdmin: 'AddAdmin',
             Paiement: 'Paiement',
             ListeDesAdmines: 'ListeDesAdmines',
-            tableData:[],
+            listeEnseignants:'/listeEnseignants',
+
+            tableData: [],
 
             profile: {
                 firstName: '',
@@ -220,9 +231,9 @@ export default {
         }
     },
 
-  
+
     computed: {
-    
+
         data() {
             return this.$store.getters.getData;
         },
@@ -295,27 +306,27 @@ export default {
 
         logout() {
 
-const authToken = this.$store.getters.getData.data.token.plainTextToken;
+            const authToken = this.$store.getters.getData.data.token.plainTextToken;
 
-axios.post('http://localhost:8000/api/logout', {}, {
-    headers: {
-        Authorization: `Bearer ${authToken}`,
-    },
-})
-    .then(response => {
-        this.logout = response.data;
-        console.log(this.logout);
+            axios.post('http://localhost:8000/api/logout', {}, {
+                headers: {
+                    Authorization: `Bearer ${authToken}`,
+                },
+            })
+                .then(response => {
+                    this.logout = response.data;
+                    console.log(this.logout);
 
-        // Redirect to the home page or any other desired page
+                    // Redirect to the home page or any other desired page
 
-        this.$router.push('/');
-        alert('Déconnexion effectuée avec succès');
-    })
-    .catch(error => {
-        // Handle any errors that occur during the request
-        console.error(error);
-    });
-},
+                    this.$router.push('/');
+                    alert('Déconnexion effectuée avec succès');
+                })
+                .catch(error => {
+                    // Handle any errors that occur during the request
+                    console.error(error);
+                });
+        },
     }
 
 

@@ -70,24 +70,29 @@
                                     Interventions
                                 </a></router-link>
 
+                            <router-link :to="listeEnseignants"
+                                v-if="isAdminEtablissement || isRHEtablissement || isPresidentUAE || isAdminUAE"> <a
+                                    href="#" class="nav-link ">
+                                    <div class="sb-nav-link-icon"> <font-awesome-icon icon="fa-solid fa-list" /></div>
+                                    Listes des enseignants
+                                </a></router-link>
 
-                            <router-link :to="ListeDesAdmines" v-if="isAdminUAE || isAdminEtablissement"> <a href="#"
+                            <router-link :to="ListeDesAdmines" v-if="isAdminUAE || isPresidentUAE"> <a href="#"
                                     class="nav-link ">
                                     <div class="sb-nav-link-icon"> <font-awesome-icon icon="fa-solid fa-list" />
                                     </div>
                                     Liste des Admins
                                 </a></router-link>
 
-                            <router-link :to="AddAdmin" v-if="isAdminUAE || isAdminEtablissement"> <a href="#"
-                                    class="nav-link">
+                            <router-link :to="AddAdmin" v-if="isAdminUAE || isPresidentUAE"> <a href="#" class="nav-link">
                                     <div class="sb-nav-link-icon"> <font-awesome-icon icon="fa-solid fa-user-plus" /></div>
                                     Ajouter un Admin
                                 </a></router-link>
 
 
                             <router-link :to="Paiement"
-                                v-if="isAdminUAE || isPresidentUAE || isRHEtablissement || isEnseignant"> <a href="#"
-                                    class="nav-link ">
+                                v-if="isAdminUAE || isPresidentUAE || isRHEtablissement || isEnseignant || isAdminEtablissement">
+                                <a href="#" class="nav-link ">
                                     <div class="sb-nav-link-icon"> <font-awesome-icon icon="fa-solid fa-credit-card" />
                                     </div>
                                     Paiement
@@ -111,12 +116,7 @@
                                 </router-link></li>
                             <li class="breadcrumb-item active">Détails des Interventions</li>
                         </ol>
-                        <div class="card mb-4">
-                            <div class="card-body">
-                                Vous trouvez ici les informations sur les interventions !
-
-                            </div>
-                        </div>
+                  
                         <div class="card mb-4">
                             <div class="cardTable">
                                 <font-awesome-icon icon="fa-solid fa-building-columns" /> UAE :
@@ -163,11 +163,12 @@
                                                     <td>{{ intervention.date_fin }}</td>
                                                     <td>{{ intervention.nbr_heures }}</td>
                                                     <td>{{ intervention.visa_etab }}
-                                                        <button v-if="isAdminEtablissement || isRHEtablissement" type="button"
-                                                            class="btn" id="valider">
-                                                            <font-awesome-icon icon="fa-solid fa-check" /> </button></td>
+                                                        <button v-if="isAdminEtablissement"
+                                                            type="button" class="btn" id="valider">
+                                                            <font-awesome-icon icon="fa-solid fa-check" /> </button>
+                                                    </td>
                                                     <td>{{ intervention.visa_uae }}
-                                                        <button v-if="isAdminUAE || isPresidentUAE" type="button"
+                                                        <button v-if=" isPresidentUAE" type="button"
                                                             class="btn" id="valider">
                                                             <font-awesome-icon icon="fa-solid fa-check" /> </button>
                                                     </td>
@@ -216,11 +217,12 @@ export default {
             checkemail: 'checkemail',
             Tables: 'Tables',
             platform: 'platform',
-            Interventions: '/Interventions',
+            Interventions: 'Interventions',
             AddAdmin: 'AddAdmin',
             Paiement: 'Paiement',
             ListeDesAdmines: 'ListeDesAdmines',
-            InterventionsDetails: 'InterventionsDetails',
+            listeEnseignants:'/listeEnseignants',
+            InterventionsDetails: '/InterventionsDetails',
             interventions: [],
 
             profile: {
@@ -234,7 +236,7 @@ export default {
             isAdminEtablissement: false,
             isRHEtablissement: false,
             isEnseignant: false,
-
+            interventionId:'',
 
         }
     },
@@ -251,6 +253,7 @@ export default {
 
     mounted() {
         this.statut();
+        this.interventionId=this.$route.params.id_etab
     },
 
     created() {

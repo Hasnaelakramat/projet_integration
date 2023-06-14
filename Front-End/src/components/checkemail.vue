@@ -63,8 +63,7 @@ export default {
   },
   methods: {
     resetPassword() {
-      // Code pour réinitialiser le mot de passe
-      // Utilisez this.code pour accéder au code confidentiel entré
+      
     }
   }
 };

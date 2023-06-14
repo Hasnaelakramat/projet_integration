@@ -70,24 +70,29 @@
                                     Interventions
                                 </a></router-link>
 
+                            <router-link :to="listeEnseignants"
+                                v-if="isAdminEtablissement || isRHEtablissement || isPresidentUAE || isAdminUAE"> <a
+                                    href="#" class="nav-link ">
+                                    <div class="sb-nav-link-icon"> <font-awesome-icon icon="fa-solid fa-list" /></div>
+                                    Listes des enseignants
+                                </a></router-link>
 
-                            <router-link :to="ListeDesAdmines" v-if="isAdminUAE || isAdminEtablissement"> <a href="#"
+                            <router-link :to="ListeDesAdmines" v-if="isAdminUAE || isPresidentUAE"> <a href="#"
                                     class="nav-link ">
                                     <div class="sb-nav-link-icon"> <font-awesome-icon icon="fa-solid fa-list" />
                                     </div>
                                     Liste des Admins
                                 </a></router-link>
 
-                            <router-link :to="AddAdmin" v-if="isAdminUAE || isAdminEtablissement"> <a href="#"
-                                    class="nav-link ">
+                            <router-link :to="AddAdmin" v-if="isAdminUAE || isPresidentUAE"> <a href="#" class="nav-link">
                                     <div class="sb-nav-link-icon"> <font-awesome-icon icon="fa-solid fa-user-plus" /></div>
                                     Ajouter un Admin
                                 </a></router-link>
 
 
                             <router-link :to="Paiement"
-                                v-if="isAdminUAE || isPresidentUAE || isRHEtablissement || isEnseignant"> <a href="#"
-                                    class="nav-link ">
+                                v-if="isAdminUAE || isPresidentUAE || isRHEtablissement || isEnseignant || isAdminEtablissement">
+                                <a href="#" class="nav-link ">
                                     <div class="sb-nav-link-icon"> <font-awesome-icon icon="fa-solid fa-credit-card" />
                                     </div>
                                     Paiement
@@ -95,7 +100,7 @@
 
                         </div>
                     </div>
-                    <div class="sb-sidenav-footer">
+                    <div class="sb-sidenav-footer py-3  mt-auto ">
                         <div class="">Connecté en tant que :</div>
                         {{ getType }}
                     </div>
@@ -111,12 +116,18 @@
                                 </router-link></li>
                             <li class="breadcrumb-item active">Interventions</li>
                         </ol>
-                        <div class="card mb-4">
+                        <div v-if="isAdminUAE || isPresidentUAE" class="card mb-4">
                             <div class="card-body">
                                 Vous trouvez ici les differents établissements de l'université abdelmalek essaadi!
                                 <br>
                                 Veuillez selectionner un établissement pour voir les interventions qui le concernent
-                                <hr>
+                            </div>
+                        </div>
+
+
+                        <div v-if="isAdminEtablissement || isRHEtablissement" class="card mb-4">
+                            <div class="card-body">
+
                                 <form class="input-group" v-if="isAdminEtablissement || isRHEtablissement">
                                     <div class="d-flex align-items-center">
                                         <router-link :to="AddIntervention">
@@ -132,56 +143,39 @@
 
                             </div>
                         </div>
-                      <router-link :to="InterventionsDetails"><a>Details Interventions </a></router-link>  
 
 
-
-                        <!-- <ul v-if="isAdminUAE || isPresidentUAE" v-for="item in etablissements">
-
-
-                            <li>
-
-                                <router-link :to="`${InterventionsDetails}/${item.id_etab}`"><a href="#"><strong>{{
-                                    item.code }}:</strong></a></router-link>
+                        <ul v-if="isAdminUAE || isPresidentUAE" v-for="item in etablissements">
 
 
-                                {{ item.nom }},
+                            <li><strong>
+                                    <button class="goto" @click="details(item.id_etab)"></button>
+                                    {{ item.code }},
 
-                                {{ item.ville }}
+
+                                    {{ item.nom }},
+
+                                    {{ item.ville }}</strong>
                             </li>
 
                         </ul>
 
-                        <ul v-if="isAdminEtablissement || isRHEtablissement" v-for="item in etablissements">
+                        <div v-if="isAdminEtablissement || isRHEtablissement">
+                            <router-link :to="InterventionsDetails">
+                                <strong>
+
+                                    <button class="goto">
+                                        <font-awesome-icon icon="fa-solid fa-broom-ball" />
+                                    </button>
+
+                                    Voir l'ensemble des interventions de votre etablissement
+                                </strong>
+                            </router-link>
+
+                        </div>
 
 
-                            <li>
 
-                                <router-link :to="`${InterventionsDetails}/${item.id_etab}`"><a href="#"><strong>{{
-                                    item.code }}:</strong></a></router-link>
-
-
-                                {{ item.nom }},
-
-                                {{ item.ville }}
-                            </li>
-
-                        </ul>
-
-                        <ul v-if="isEnseignant" v-for="item in etablissements">
-
-
-                            <li>
-
-                                <router-link :to="`${InterventionsDetails}/${item.id_etab}`"><a href="#"><strong>Voir vos interventions</strong></a></router-link>
-
-
-                                {{ item.nom }},
-
-                                {{ item.ville }}
-                            </li>
-
-                        </ul> -->
 
 
 
@@ -223,45 +217,40 @@
 
 
 <script >
+import { bottom } from '@popperjs/core';
 import axios from 'axios';
 
 
 
 export default {
-
     data() {
         return {
-            home: '/',
-            checkemail: 'checkemail',
-            Tables: 'Tables',
-            platform: 'platform',
-            Interventions: 'Interventions',
-            AddAdmin: 'AddAdmin',
-            Paiement: 'Paiement',
-            ListeDesAdmines: 'ListeDesAdmines',
-            InterventionsDetails: '/InterventionsDetails',
+            home: "/",
+            checkemail: "checkemail",
+            Tables: "Tables",
+            platform: "platform",
+            Interventions: "Interventions",
+            AddAdmin: "AddAdmin",
+            Paiement: "Paiement",
+            ListeDesAdmines: "ListeDesAdmines",
+            listeEnseignants: "/listeEnseignants",
+            InterventionsDetails: "/InterventionsDetails",
             etablissements: [],
-            AddEtab: 'AddEtab',
-            etablissementId: '',
-            AddIntervention:'/',
-
-
-
-
+            AddEtab: "AddEtab",
+            etablissementId: "",
+            AddIntervention: "/AddIntervention",
             profile: {
-                firstName: '',
-                lastName: '',
-                email: '',
-                telephone: '',
+                firstName: "",
+                lastName: "",
+                email: "",
+                telephone: "",
             },
             isPresidentUAE: false,
             isAdminUAE: false,
             isAdminEtablissement: false,
             isRHEtablissement: false,
             isEnseignant: false,
-
-
-        }
+        };
     },
     computed: {
         data() {
@@ -270,45 +259,40 @@ export default {
         getType() {
             return this.$store.getters.getType;
         },
-
     },
-
     mounted() {
         this.statut();
-        // this.listeEtabs();
-
+        this.listeEtabs();
     },
-    // created() {
-    //     this.etablissementId = this.$route.params.id;
-
-    // },
-
-
-    methods:
-    {
-
-        // listeEtabs() {
-        //     const authToken = this.$store.getters.getData.data.token.plainTextToken;
-        //     // Make the API request
-        //     axios.get('http://localhost:8000/api/show_etablissements', {
-        //         headers: {
-        //             Authorization: `Bearer ${authToken}`,
-        //         },
-        //     }).then(response => {
-        //         console.log(response.data);
-        //         this.etablissements = response.data;
-        //         const router = useRouter();
-        //         router.push({ path: '/InterventionsDetails/' + etablissementId });
-
-        //     })
-        //         .catch(error => {
-        //             console.error(error);
-        //         });
-        // },
+    created() {
+        this.etablissementId = this.$route.params.id;
+    },
+    methods: {
+        details(id_etab) {
+            console.log('id_etab: ' + id_etab);
+            this.$router.push(`/InterventionsDetails/${id_etab}/details`);
+        },
+        listeEtabs() {
+            const authToken = this.$store.getters.getData.data.token.plainTextToken;
+            // Make the API request
+            axios.get("http://localhost:8000/api/show_etablissements", {
+                headers: {
+                    Authorization: `Bearer ${authToken}`,
+                },
+            }).then(response => {
+                console.log(response.data);
+                this.etablissements = response.data;
+                const router = useRouter();
+                router.push({ path: "/InterventionsDetails/" + etablissementId });
+            })
+                .catch(error => {
+                    console.error(error);
+                });
+        },
         Profil() {
             const authToken = this.$store.getters.getData.data.token.plainTextToken;
-            console.log('token:', authToken)
-            axios.get('http://localhost:8000/api/profile', {
+            console.log("token:", authToken);
+            axios.get("http://localhost:8000/api/profile", {
                 headers: {
                     Authorization: `Bearer ${authToken}`,
                 },
@@ -316,23 +300,16 @@ export default {
                 .then(response => {
                     this.profile = response.data;
                     console.log(this.profile);
-                    this.$store.dispatch('setProfilData', response.data);
-
-                    this.$router.push('/Profil')
-
+                    this.$store.dispatch("setProfilData", response.data);
+                    this.$router.push("/Profil");
                 })
                 .catch(error => {
                     console.error(error);
                 });
-
-
         },
-
         logout() {
-
             const authToken = this.$store.getters.getData.data.token.plainTextToken;
-
-            axios.post('http://localhost:8000/api/logout', {}, {
+            axios.post("http://localhost:8000/api/logout", {}, {
                 headers: {
                     Authorization: `Bearer ${authToken}`,
                 },
@@ -340,39 +317,34 @@ export default {
                 .then(response => {
                     this.logout = response.data;
                     console.log(this.logout);
-
                     // Redirect to the home page or any other desired page
-
-                    this.$router.push('/');
-                    alert('Déconnexion effectuée avec succès');
+                    this.$router.push("/");
+                    alert("Déconnexion effectuée avec succès");
                 })
                 .catch(error => {
                     // Handle any errors that occur during the request
                     console.error(error);
                 });
         },
-
         statut() {
-            if (this.getType === "Président de l'UAE") { this.isPresidentUAE = true; }
-
+            if (this.getType === "Président de l'UAE") {
+                this.isPresidentUAE = true;
+            }
             else if (this.getType === "Admin de l'UAE") {
                 this.isAdminUAE = true;
-
-            } else if (this.getType == "Admin d'un établissement") {
+            }
+            else if (this.getType == "Admin d'un établissement") {
                 this.isAdminEtablissement = true;
-
-            } else if (this.getType == "RH d'un établissement") {
+            }
+            else if (this.getType == "RH d'un établissement") {
                 this.isRHEtablissement = true;
             }
-            else if (this.getType == "Enseignant") { this.isEnseignant = true; }
+            else if (this.getType == "Enseignant") {
+                this.isEnseignant = true;
+            }
         },
-
-    }
-
-
-
-
-
+    },
+    components: { bottom }
 }
 
 </script>

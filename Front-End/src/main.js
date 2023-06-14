@@ -33,11 +33,10 @@ const store = createStore({
       profilData: null,
       Type:null,
       email:null,
-      etablissements: [] // Initialize the etablissements array
+      etablissements: [] 
 
     },
     mutations: {
-      // Define mutations to modify the state
       setData(state, payload) {
         state.data = payload;
         

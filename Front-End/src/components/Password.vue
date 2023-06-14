@@ -102,9 +102,7 @@ export default {
         axios
           .post('http://localhost:8000/api/forgot_password', { email: this.email })
           .then(response => {
-            // Handle success response
             console.log(response.data);
-            // Effectuer la redirection vers la page appropriée après l'envoi de l'email
             this.$router.push('/checkemail');
           })
           .catch(error => {
@@ -112,7 +110,6 @@ export default {
             alert("Aucun utilisateur avec cet email ! Veuillez saisir un email valide");
           });
       } else {
-        // Afficher une erreur pour l'email vide ou invalide
         alert("Veuillez corriger les erreurs dans le formulaire avant de soumettre.");
       }
     },

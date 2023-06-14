@@ -12,7 +12,16 @@
  */
 
 
- .cardTable {
+
+
+ .goto{
+  background-color: rgba(101, 146, 253, 1);
+  padding: 10px;
+  border: none;
+
+
+ }
+  .cardTable {
   margin-bottom: 0;
   border-bottom: var(--bs-card-border-width) solid var(--bs-card-border-color);
   position: relative;

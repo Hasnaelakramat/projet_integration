@@ -71,28 +71,29 @@
                                     Interventions
                                 </a></router-link>
 
-                                <router-link :to="listeEnseignants" v-if="isAdminEtablissement || isRHEtablissement"> <a href="#" class="nav-link ">
+                            <router-link :to="listeEnseignants"
+                                v-if="isAdminEtablissement || isRHEtablissement || isPresidentUAE || isAdminUAE"> <a
+                                    href="#" class="nav-link ">
                                     <div class="sb-nav-link-icon"> <font-awesome-icon icon="fa-solid fa-list" /></div>
                                     Listes des enseignants
                                 </a></router-link>
 
-                            <router-link :to="ListeDesAdmines" v-if="isAdminUAE || isAdminEtablissement"> <a href="#"
+                            <router-link :to="ListeDesAdmines" v-if="isAdminUAE || isPresidentUAE"> <a href="#"
                                     class="nav-link ">
                                     <div class="sb-nav-link-icon"> <font-awesome-icon icon="fa-solid fa-list" />
                                     </div>
                                     Liste des Admins
                                 </a></router-link>
 
-                            <router-link :to="AddAdmin" v-if="isAdminUAE || isAdminEtablissement"> <a href="#"
-                                    class="nav-link" style="text-decoration: none;">
+                            <router-link :to="AddAdmin" v-if="isAdminUAE || isPresidentUAE"> <a href="#" class="nav-link">
                                     <div class="sb-nav-link-icon"> <font-awesome-icon icon="fa-solid fa-user-plus" /></div>
                                     Ajouter un Admin
                                 </a></router-link>
 
 
                             <router-link :to="Paiement"
-                                v-if="isAdminUAE || isPresidentUAE || isRHEtablissement || isEnseignant"> <a href="#"
-                                    class="nav-link ">
+                                v-if="isAdminUAE || isPresidentUAE || isRHEtablissement || isEnseignant || isAdminEtablissement">
+                                <a href="#" class="nav-link ">
                                     <div class="sb-nav-link-icon"> <font-awesome-icon icon="fa-solid fa-credit-card" />
                                     </div>
                                     Paiement
@@ -100,7 +101,7 @@
 
                         </div>
                     </div>
-                    <div class="sb-sidenav-footer">
+                    <div class="sb-sidenav-footer py-3  mt-auto ">
                         <div class="">Connecté en tant que :</div>
                         {{ getType }}
                     </div>
@@ -133,9 +134,8 @@
                                                 <div class="col">
                                                     <div class="card border-0 rounded-lg ">
                                                         <div class="card-body">
-                                                            <form @submit.prevent="updateEnseignant(id_enseign)">
+                                                            <form @submit.prevent="updateEnseignant()">
                                                                 <div class="row">
-                                    
                                                                     <div class="col-md-6">
 
                                                                         <div class="form-floating mb-3">
@@ -146,9 +146,9 @@
 
                                                                             <input class="form-control" id="inputLastName"
                                                                                 style="height: 50px;" type="text"
-                                                                                autocomplete="off" v-model="nom"  />
+                                                                                autocomplete="off" v-model="nom" />
                                                                         </div>
-                                                        
+
 
                                                                     </div>
                                                                     <div class="col-md-6">
@@ -159,13 +159,12 @@
                                                                             </label><br><br>
                                                                             <input class="form-control" id="inputFirstName"
                                                                                 style="height: 50px;" type="text"
-                                                                                autocomplete="off" v-model="prenom"
-                                                                                 />
+                                                                                autocomplete="off" v-model="prenom" />
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="row">
-                             
+
 
                                                                     <div class="col-md-6">
                                                                         <div class="form-floating mb-3 ">
@@ -176,8 +175,7 @@
                                                                             </label><br><br>
                                                                             <input class="form-control" id="inputEmail"
                                                                                 style="height: 50px;" type="email"
-                                                                                autocomplete="off" v-model="email"
-                                                                                 />
+                                                                                autocomplete="off" v-model="email" />
 
 
                                                                         </div>
@@ -191,23 +189,22 @@
 
                                                                             <input class="form-control"
                                                                                 style="height: 50px;" type="text"
-                                                                                autocomplete="off" v-model="date_nais"
-                                                                                 />
+                                                                                autocomplete="off" v-model="date_nais" />
                                                                         </div>
                                                                     </div>
                                                                 </div>
 
                                                                 <div class="row">
-                                             
+
                                                                     <div class="col-md-6">
                                                                         <div class="form-floating ">
 
                                                                             <label for="inputgrade"
                                                                                 style="font-weight: bold;">Grade :
                                                                             </label><br><br>
-                                                                            <input class="form-control" style="height: 50px;"
-                                                                            type="text" autocomplete="off" v-model="id_grade"
-                                                                             />
+                                                                            <input class="form-control"
+                                                                                style="height: 50px;" type="text"
+                                                                                autocomplete="off" v-model="id_grade" />
 
 
 
@@ -217,9 +214,9 @@
                                                                 </div>
 
 
-                                                            
 
-                                 
+
+
 
                                                                 <div class="mt-4 mb-0">
 
@@ -229,7 +226,8 @@
 
                                                                         <a href="#" class="small" type="reset">Annuler</a>
 
-                                                                        <button class="btn" id="submit" type="submit" style="text-decoration: none; background-color: #343090;">Ajouter</button>
+                                                                        <button class="btn" id="submit" type="submit"
+                                                                            style="text-decoration: none; background-color: #343090;">Ajouter</button>
 
 
                                                                     </div>
@@ -285,11 +283,11 @@ export default {
             AddAdmin: 'AddAdmin',
             Paiement: 'Paiement',
             ListeDesAdmines: 'ListeDesAdmines',
-            tableData:[],
-            AjouterEnseignant:'/AjouterEnseignant',
-            listeEnseignants:'/ListeEnseignants',
-            id_enseign:'',
-        
+            tableData: [],
+            AjouterEnseignant: '/AjouterEnseignant',
+            listeEnseignants: '/ListeEnseignants',
+            id_enseign: '',
+
 
 
             profile: {
@@ -313,7 +311,7 @@ export default {
             date_nais: '',
 
 
-
+            userID: '',
 
 
         }
@@ -331,6 +329,7 @@ export default {
 
     mounted() {
         this.statut();
+        this.userID=this.$route.params.userid ;
     },
     created() {
         this.id_enseign = this.$route.params.id_enseign;
@@ -339,23 +338,24 @@ export default {
 
     methods:
     {
-        updateEnseignant(id_enseign) {
+        updateEnseignant() {
             const authToken = this.$store.getters.getData.data.token.plainTextToken;
-      const updatedEnseignant = {
-        nom: this.nom, 
-        prenom: this.prenom, 
-        email: this.email, 
-        date_nais: this.date_nais, 
-        id_grade:this.id_grade, 
-      };
+            const updatedEnseignant = {
+                nom: this.nom,
+                prenom: this.prenom,
+                email: this.email,
+                date_nais: this.date_nais,
+                id_grade: this.id_grade,
+            };
 
-      // Make a POST request to your API with the updated teacher's information
-      axios.post('http://localhost:8000/api/update_enseignant/${id_enseign', updatedEnseignant ,{
+            // Make a POST request to your API with the updated teacher's information
+            console.log("id2",this.userID);
+            axios.put(`http://localhost:8000/api/update_enseignant/${this.userID}`, updatedEnseignant, {
                 headers: {
                     Authorization: `Bearer ${authToken}`,
                 },
             })
-            .then(response => {
+                .then(response => {
                     console.log(response.data);
                     const responseData = response.data;
                     if (typeof responseData === 'object' && responseData.hasOwnProperty('data')) {
@@ -373,26 +373,26 @@ export default {
                         this.date_nais = '';
                     } else {
                         console.error('Invalid response data structure');
-                        
+
                     }
                 })
-        .catch(error => {
+                .catch(error => {
 
-if (error.response.status === 422) {
-    const errors = error.response.data.errors;
-    console.log(errors);
-} else {
-    console.log(error);
-}
-console.error(error);
-// Handle the error response or show an error message
-if (error.response && error.response.data && error.response.data.message) {
-    alert(error.response.data.message); // Display the error message
-} else {
-    alert('An error occurred. Please try again.'); // Display a generic error message
-}
-});
-    },
+                    if (error.response.status === 422) {
+                        const errors = error.response.data.errors;
+                        console.log(errors);
+                    } else {
+                        console.log(error);
+                    }
+                    console.error(error);
+                    // Handle the error response or show an error message
+                    if (error.response && error.response.data && error.response.data.message) {
+                        alert(error.response.data.message); // Display the error message
+                    } else {
+                        alert('An error occurred. Please try again.'); // Display a generic error message
+                    }
+                });
+        },
 
         addTeacher() {
             const authToken = this.$store.getters.getData.data.token.plainTextToken;
@@ -429,7 +429,7 @@ if (error.response && error.response.data && error.response.data.message) {
                         this.date_nais = '';
                     } else {
                         console.error('Invalid response data structure');
-                        
+
                     }
                 })
                 .catch(error => {
@@ -478,29 +478,29 @@ if (error.response && error.response.data && error.response.data.message) {
         },
         logout() {
 
-const authToken = this.$store.getters.getData.data.token.plainTextToken;
+            const authToken = this.$store.getters.getData.data.token.plainTextToken;
 
-axios.post('http://localhost:8000/api/logout', {}, {
-    headers: {
-        Authorization: `Bearer ${authToken}`,
-    },
-})
-    .then(response => {
-        this.logout = response.data;
-        console.log(this.logout);
+            axios.post('http://localhost:8000/api/logout', {}, {
+                headers: {
+                    Authorization: `Bearer ${authToken}`,
+                },
+            })
+                .then(response => {
+                    this.logout = response.data;
+                    console.log(this.logout);
 
-        // Redirect to the home page or any other desired page
+                    // Redirect to the home page or any other desired page
 
-        this.$router.push('/');
-        alert('Déconnexion effectuée avec succès');
-    })
-    .catch(error => {
-        // Handle any errors that occur during the request
-        console.error(error);
-    });
-},
+                    this.$router.push('/');
+                    alert('Déconnexion effectuée avec succès');
+                })
+                .catch(error => {
+                    // Handle any errors that occur during the request
+                    console.error(error);
+                });
+        },
 
-statut() {
+        statut() {
             if (this.getType === "Président de l'UAE") { this.isPresidentUAE = true; }
 
             else if (this.getType === "Admin de l'UAE") {
@@ -516,7 +516,7 @@ statut() {
         },
 
     },
-}  
+}
 
 
 

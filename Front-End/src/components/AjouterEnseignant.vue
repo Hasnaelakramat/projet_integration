@@ -71,27 +71,27 @@
                                     Interventions
                                 </a></router-link>
 
-                                <router-link :to="listeEnseignants" v-if="isAdminEtablissement || isRHEtablissement"> <a href="#" class="nav-link ">
+                                <router-link :to="listeEnseignants" v-if="isAdminEtablissement || isRHEtablissement || isPresidentUAE || isAdminUAE"> <a href="#" class="nav-link ">
                                     <div class="sb-nav-link-icon"> <font-awesome-icon icon="fa-solid fa-list" /></div>
                                     Listes des enseignants
                                 </a></router-link>
 
-                            <router-link :to="ListeDesAdmines" v-if="isAdminUAE || isAdminEtablissement"> <a href="#"
+                            <router-link :to="ListeDesAdmines" v-if="isAdminUAE || isPresidentUAE "> <a href="#"
                                     class="nav-link ">
                                     <div class="sb-nav-link-icon"> <font-awesome-icon icon="fa-solid fa-list" />
                                     </div>
                                     Liste des Admins
                                 </a></router-link>
 
-                            <router-link :to="AddAdmin" v-if="isAdminUAE || isAdminEtablissement"> <a href="#"
-                                    class="nav-link" style="text-decoration: none;">
+                            <router-link :to="AddAdmin" v-if="isAdminUAE || isPresidentUAE "> <a href="#"
+                                    class="nav-link">
                                     <div class="sb-nav-link-icon"> <font-awesome-icon icon="fa-solid fa-user-plus" /></div>
                                     Ajouter un Admin
                                 </a></router-link>
 
 
                             <router-link :to="Paiement"
-                                v-if="isAdminUAE || isPresidentUAE || isRHEtablissement || isEnseignant"> <a href="#"
+                                v-if="isAdminUAE || isPresidentUAE || isRHEtablissement || isEnseignant || isAdminEtablissement"> <a href="#"
                                     class="nav-link ">
                                     <div class="sb-nav-link-icon"> <font-awesome-icon icon="fa-solid fa-credit-card" />
                                     </div>
@@ -100,7 +100,7 @@
 
                         </div>
                     </div>
-                    <div class="sb-sidenav-footer">
+                    <div class="sb-sidenav-footer py-3  mt-auto ">
                         <div class="">Connecté en tant que :</div>
                         {{ getType }}
                     </div>
@@ -118,11 +118,7 @@
                             </li>
                             <li class="breadcrumb-item active">Ajouter un Enseignant</li>
                         </ol>
-                        <div class="card ">
-                            <div class="card-body">
-                                Veuillez saisir les informations requises !
-                            </div>
-                        </div>
+                
 
                         <div class="costum bg-color">
                             <div id="layoutAuthentication">

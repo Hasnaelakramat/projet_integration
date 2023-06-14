@@ -71,24 +71,29 @@
                                     Interventions
                                 </a></router-link>
 
+                            <router-link :to="listeEnseignants"
+                                v-if="isAdminEtablissement || isRHEtablissement || isPresidentUAE || isAdminUAE"> <a
+                                    href="#" class="nav-link ">
+                                    <div class="sb-nav-link-icon"> <font-awesome-icon icon="fa-solid fa-list" /></div>
+                                    Listes des enseignants
+                                </a></router-link>
 
-                            <router-link :to="ListeDesAdmines" v-if="isAdminUAE || isAdminEtablissement"> <a href="#"
+                            <router-link :to="ListeDesAdmines" v-if="isAdminUAE || isPresidentUAE"> <a href="#"
                                     class="nav-link ">
                                     <div class="sb-nav-link-icon"> <font-awesome-icon icon="fa-solid fa-list" />
                                     </div>
                                     Liste des Admins
                                 </a></router-link>
 
-                            <router-link :to="AddAdmin" v-if="isAdminUAE || isAdminEtablissement"> <a href="#"
-                                    class="nav-link ">
+                            <router-link :to="AddAdmin" v-if="isAdminUAE || isPresidentUAE"> <a href="#" class="nav-link">
                                     <div class="sb-nav-link-icon"> <font-awesome-icon icon="fa-solid fa-user-plus" /></div>
                                     Ajouter un Admin
                                 </a></router-link>
 
 
                             <router-link :to="Paiement"
-                                v-if="isAdminUAE || isPresidentUAE || isRHEtablissement || isEnseignant"> <a href="#"
-                                    class="nav-link ">
+                                v-if="isAdminUAE || isPresidentUAE || isRHEtablissement || isEnseignant || isAdminEtablissement">
+                                <a href="#" class="nav-link ">
                                     <div class="sb-nav-link-icon"> <font-awesome-icon icon="fa-solid fa-credit-card" />
                                     </div>
                                     Paiement
@@ -96,7 +101,7 @@
 
                         </div>
                     </div>
-                    <div class="sb-sidenav-footer">
+                    <div class="sb-sidenav-footer py-3  mt-auto ">
                         <div class="">Connecté en tant que :</div>
                         {{ getType }}
                     </div>
@@ -105,14 +110,14 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Ajouter un établissement</h1>
+                        <h1 class="mt-4">Ajouter une ntervention</h1>
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
-                                <router-link :to="Tables">
-                                    <a href="#">Etablissements</a>
+                                <router-link :to="Interventions">
+                                    <a href="#">Interventions</a>
                                 </router-link>
                             </li>
-                            <li class="breadcrumb-item active">Ajouter un établissement</li>
+                            <li class="breadcrumb-item active">Ajouter une intervention</li>
                         </ol>
                         <div class="card ">
                             <div class="card-body">
@@ -128,7 +133,7 @@
                                                 <div class="col">
                                                     <div class="card border-0 rounded-lg ">
                                                         <div class="card-body">
-                                                            <form @submit.prevent="AjouterEtab">
+                                                            <form @submit.prevent="AjouteIntervention">
                                                                 <div class="row ">
                                                                     <div class="col">
                                                                         <div class="form-floating">
@@ -139,8 +144,7 @@
                                                                             <input class="form-control"
                                                                                 style="height: 50px;" id="inputCode"
                                                                                 type="text" placeholder="XXXXXXXXX"
-                                                                                autocomplete="off" v-model="ppr"
-                                                                                required />
+                                                                                autocomplete="off" v-model="ppr" required />
 
 
                                                                         </div>
@@ -149,12 +153,13 @@
                                                                         <div class="form-floating">
 
                                                                             <label for="inputNom"
-                                                                                style="font-weight: bold;">intitule_intervention
+                                                                                style="font-weight: bold;">intitule
+                                                                                intervention
                                                                             </label><br><br>
                                                                             <input class="form-control"
                                                                                 style="height: 50px;" id="inputNom"
-                                                                                type="text" autocomplete="off" v-model="intitule_intervention"
-                                                                                required />
+                                                                                type="text" autocomplete="off"
+                                                                                v-model="intitule_intervention" required />
 
 
 
@@ -168,7 +173,8 @@
 
 
                                                                             <label for="inputTelephone"
-                                                                                style="font-weight: bold;">annee_univ :
+                                                                                style="font-weight: bold;">année
+                                                                                universitaire :
                                                                             </label><br><br>
                                                                             <input class="form-control"
                                                                                 style="height: 50px;" id="inputTelephone"
@@ -207,7 +213,7 @@
 
 
                                                                             <label for="inputVille"
-                                                                                style="font-weight: bold;">date_debut :
+                                                                                style="font-weight: bold;">date de début :
                                                                             </label><br><br>
                                                                             <input class="form-control"
                                                                                 style="height: 50px;" id="inputVille"
@@ -223,7 +229,7 @@
 
 
                                                                             <label for="inputNbrEnseignants"
-                                                                                style="font-weight: bold;">date_fin
+                                                                                style="font-weight: bold;">date de fin
                                                                             </label><br><br>
                                                                             <input class="form-control"
                                                                                 style="height: 50px;"
@@ -234,20 +240,20 @@
 
                                                                         </div>
 
-                                                                        <div class="form-floating">
+
+                                                                    </div>
+                                                                    <div class="form-floating">
 
 
-                                                                            <label for="inputNbrEnseignants"
-                                                                                style="font-weight: bold;">nbr_heures
-                                                                            </label><br><br>
-                                                                            <input class="form-control"
-                                                                                style="height: 50px;"
-                                                                                id="inputNbrEnseignants" type="text"
-                                                                                autocomplete="off" v-model="nbr_heures"
-                                                                                required />
+                                                                        <label for="inputNbrEnseignants"
+                                                                            style="font-weight: bold;">nombre d'heures
+                                                                        </label><br><br>
+                                                                        <input class="form-control" style="height: 50px;"
+                                                                            id="inputNbrEnseignants" type="text"
+                                                                            autocomplete="off" v-model="nbr_heures"
+                                                                            required />
 
 
-                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="mt-4 mb-0">
@@ -314,17 +320,20 @@ export default {
 
     data() {
         return {
-            home: '/',
-            checkemail: 'checkemail',
-            Tables: 'Tables',
-            platform: '/platform',
-            AddAdmin: 'AddAdmin',
-            Paiement: 'Paiement',
-            ListeDesAdmines: 'listeDesAdmines',
-            Interventions: 'Interventions',
+            home: "/",
+            checkemail: "checkemail",
+            Tables: "Tables",
+            platform: "platform",
+            Interventions: "Interventions",
+            AddAdmin: "AddAdmin",
+            Paiement: "Paiement",
+            ListeDesAdmines: "ListeDesAdmines",
+            listeEnseignants: "/listeEnseignants",
+            InterventionsDetails: "/InterventionsDetails",
             etablissements: [],
-            AddEtab: 'AddEtab',
-            AjouteIntervention: 'AjouteIntervention',
+            AddEtab: "AddEtab",
+            etablissementId: "",
+            AddIntervention: "/AddIntervention",
 
             profile: {
                 firstName: '',
@@ -339,13 +348,13 @@ export default {
             isEnseignant: false,
 
             ppr: '',
-            intitule_intervention: '', 
-            annee_univ: '', 
-            semestre: '', 
-            date_debut: '', 
+            intitule_intervention: '',
+            annee_univ: '',
+            semestre: '',
+            date_debut: '',
             date_fin: '',
-            nbr_heures: '', 
- 
+            nbr_heures: '',
+
         }
     },
 
@@ -389,14 +398,15 @@ export default {
                         const { data } = responseData;
                         // Handle the `data` as needed
                         console.log(data);
-                        alert('Eatblissement ajouté avec succés'); // Display the success message
+                        alert('Intervention ajouté avec succés'); // Display the success message
                         // Clear the form fields
-                        this.code = '';
-                        this.nom = '';
-                        this.telephone = '';
-                        this.faxe = '';
-                        this.ville = '';
-                        this.nbr_enseignants = '';
+                        this.ppr = '';
+                        this.intitule_intervention = '';
+                        this.annee_univ = '';
+                        this.semestre = '';
+                        this.date_debut = '';
+                        this.date_fin = '';
+                        this.nbr_heures = '';
                     } else {
                         console.error('Invalid response data structure');
                     }

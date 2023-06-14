@@ -93,6 +93,7 @@ export default {
 
   methods: {
     resetPassword() {
+      alert("mot de passe changé avec succés")
       console.log("reset password")
 
       axios
