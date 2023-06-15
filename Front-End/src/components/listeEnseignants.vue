@@ -159,13 +159,13 @@
 
                                                 <tr>
 
-                                                    <td> 
+                                                    <td v-if="isAdminEtablissement || isRHEtablissement"> 
                                                             <button type="button" class="btn" id="updateEnseign" @click="update(item.id_enseign)">
                                                                 <font-awesome-icon icon="fa-solid fa-pen-to-square" />
                                                             </button>
                                                     </td>
 
-                                                    <td> <button type="button" class="btn" id="deleteEnseign"
+                                                    <td v-if="isAdminEtablissement || isRHEtablissement"> <button type="button" class="btn" id="deleteEnseign"
                                                             @click="deleteEnseignant(item.id_enseign)">
                                                             <font-awesome-icon icon="fa-solid fa-user-minus" /> </button>
                                                     </td>

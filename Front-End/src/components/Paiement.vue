@@ -175,22 +175,14 @@
 
                                         </tbody>
                                     </table>
-                                    <table> 
-                                        <thead>
-                                            <tr>
-                                                <th>Total</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                    
                                 </div>
+                                          
+
 
                             </div>
-
+                            <a href="#" class="btn " id="submit" type="submit"  style="text-decoration: none; width: 160px; height:70px;">
+                                                Téléchager la fiche de paiement</a>
                         </div>
                     </div>
 
