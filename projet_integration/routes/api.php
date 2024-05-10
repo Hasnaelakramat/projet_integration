@@ -56,19 +56,12 @@ Route::post('/add_intervention',[InterventionController::class,'add_intervention
 Route::post('/update_intervention/{id}',[InterventionController::class,'update_intervention'])->middleware(only_administrators::class);
 Route::post('/edit_db_intervention/{id}',[InterventionController::class,'edit_db_intervention'])->middleware(only_administrators::class);
 Route::post('/destroy_intervention/{id}',[InterventionController::class,'destroy'])->middleware(only_administrators::class);
-});
-
-
-
-   
 Route::get('/login',[AuthController::class,'login']);
-
 Route::get('/register',[AuthController::class,'register']);
-
-
 Route::post('/forgot_password',[AuthController::class,'forgotpassword']);
 Route::get('/resetpassword',[AuthController::class,'resetpassword']);
 
+});
 
 
 
